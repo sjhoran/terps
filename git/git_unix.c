@@ -190,6 +190,8 @@ int glkunix_startup_code(glkunix_startup_t *data)
 #endif /* GARGLK */
 
     gStream = glkunix_stream_open_pathname ((char*) data->argv[1], 0, 0);
+    glkunix_set_base_file(data->argv[1]);
+
     return 1;
 }
 

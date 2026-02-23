@@ -45,6 +45,7 @@ int glkunix_startup_code(glkunix_startup_t *data)
 {
     tads_argc = data->argc;
     tads_argv = data->argv;
+    glkunix_set_base_file(data->argv[1]);
     return TRUE;
 }
 

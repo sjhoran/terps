@@ -527,6 +527,8 @@ int os_askfile(const char *prompt, char *fname_buf, int fname_buf_len,
 
     if (file_type == OSFTSAVE || file_type == OSFTT3SAV)
         gusage = fileusage_SavedGame;
+    else if (prompt_type == OS_AFP_SAVE)
+        gusage = fileusage_SavedGame;
     else if (file_type == OSFTLOG || file_type == OSFTTEXT)
         gusage = fileusage_Transcript;
     else
@@ -538,6 +540,8 @@ int os_askfile(const char *prompt, char *fname_buf, int fname_buf_len,
 
 #ifdef GARGLK
     strcpy(fname_buf, garglk_fileref_get_name(fileref));
+#else
+    strcpy(fname_buf, glk_fileref_get_filename(fileref));
 #endif
 
     glk_fileref_destroy(fileref);

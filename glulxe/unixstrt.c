@@ -139,6 +139,8 @@ int glkunix_startup_code(glkunix_startup_t *data)
   if (!cx) cx = strrchr(data->argv[1], '\\');
   garglk_set_story_name(cx ? cx + 1 : data->argv[1]);
 #endif
+  glkunix_set_base_file(filename);
+
 
 #if VM_DEBUGGER
   if (gameinfofilename) {
