@@ -540,8 +540,10 @@ int os_askfile(const char *prompt, char *fname_buf, int fname_buf_len,
 
 #ifdef GARGLK
     strcpy(fname_buf, garglk_fileref_get_name(fileref));
-#else
+#elif defined(SJHGLKTERMW)
     strcpy(fname_buf, glk_fileref_get_filename(fileref));
+#else
+    strcpy(fname_buf, "tads-savefile.sav");
 #endif
 
     glk_fileref_destroy(fileref);
