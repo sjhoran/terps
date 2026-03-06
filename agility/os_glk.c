@@ -6733,6 +6733,7 @@ glkunix_startup_code (glkunix_startup_t * data)
   );
 #endif /* GARGLK */
 
+  glkunix_set_base_file(data->argv[1]);
   return gagt_startup_code (data->argc, data->argv);
 }
 #endif /* _unix */
