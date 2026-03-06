@@ -3389,6 +3389,7 @@ glkunix_startup_code (glkunix_startup_t * data)
       " by Simon Baldwin and Mark J. Tilford");
 #endif
 
+
   /* Handle command line arguments. */
   restore_from = NULL;
   for (argv_index = 1;
@@ -3445,7 +3446,10 @@ glkunix_startup_code (glkunix_startup_t * data)
       return TRUE;
     }
   else
+  {
+  glkunix_set_base_file(argv[argv_index]);
     gsc_game_message = NULL;
+  }
 
   /*
    * If a restore requested, open a stream to the TAF (TAS) file, and
