@@ -1605,7 +1605,7 @@ bool geas_implementation::run_commands (string cmd, const GeasBlock *room, bool 
 		  vector<string> tmp = split_param (param_contents(tok));
 
 		  for (uint i = 0; i < tmp.size(); i ++)
-		    if (match = match_command (cmd, tmp[i]))
+		    if ((match = match_command (cmd, tmp[i])))
 		      {
 			if (!dereference_vars (match.bindings, is_internal))
 			  return false;
@@ -1615,7 +1615,7 @@ bool geas_implementation::run_commands (string cmd, const GeasBlock *room, bool 
 			return true;
 		      }
 		  /*
-		    if (match = match_command (cmd, param_contents(tok)))
+		    if ((match = match_command (cmd, param_contents(tok))))
 		    {
 		    if (!dereference_vars (match.bindings))
 		    return false;
@@ -1693,13 +1693,13 @@ bool geas_implementation::try_match (string cmd, bool is_internal, bool is_norma
       return true;
     }
   
-  if (match = match_command (cmd, "look"))
+  if ((match = match_command (cmd, "look")))
     {
       look();
       return true;
     }
   
-  if (match = match_command (cmd, "give #@first# to #@second#"))
+  if ((match = match_command (cmd, "give #@first# to #@second#")))
     {
       if (!dereference_vars (match.bindings, is_internal))
 	return true;
@@ -1776,7 +1776,7 @@ bool geas_implementation::try_match (string cmd, bool is_internal, bool is_norma
       return true;
     }
 
-  if (match = match_command (cmd, "use #@first#"))
+  if ((match = match_command (cmd, "use #@first#")))
     {
       if (!dereference_vars (match.bindings, is_internal))
 	return true;
@@ -1832,7 +1832,7 @@ bool geas_implementation::try_match (string cmd, bool is_internal, bool is_norma
     }
 
 
-  if (match = match_command (cmd, "drop #@object#"))
+  if ((match = match_command (cmd, "drop #@object#")))
     {
       if (!dereference_vars (match.bindings, is_internal))
 	return true;
@@ -2310,7 +2310,7 @@ void geas_implementation::run_script (string s, string &rv)
 	  gi->debug_print ("Expected param after 'destroy exit' in " + s);
 	  return;
 	}
-      string tok = eval_param (tok);
+      tok = eval_param (tok);
       vector<string> args = split_param (tok);
       if (args.size() != 2)
 	{
