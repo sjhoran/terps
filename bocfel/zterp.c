@@ -912,7 +912,9 @@ int main(int argc, char **argv)
       die("unknown story type: %s", chunk->name);
     }
 
+#if UINT32_MAX > LONG_MAX
     if(chunk->offset > LONG_MAX) die("zcode offset too large");
+#endif
 
     memory_size = chunk->size;
     story.offset = chunk->offset;
@@ -931,7 +933,9 @@ int main(int argc, char **argv)
   }
 
   if(memory_size < 64) die("story file too small");
+#if UINT32_MAX > SIZE_MAX
   if(memory_size > SIZE_MAX - 22) die("story file too large");
+#endif
 
   /* It’s possible for a story to be cut short in the middle of an
    * instruction.  If so, the processing loop will run past the end of
