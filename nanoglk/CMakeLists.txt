@@ -1,7 +1,7 @@
 # NOTE: The files gi_blorb.h, gi_dispa.h, glk.h, and glkstart.h need to be
 # copied/linked from the glk directory into this directory.
 
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.10)
 
 find_package(SDL REQUIRED)
 find_package(SDL_ttf REQUIRED)

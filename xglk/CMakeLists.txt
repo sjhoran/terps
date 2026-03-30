@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.10)
 
 find_package(X11 REQUIRED)
 find_package(PNG REQUIRED)
