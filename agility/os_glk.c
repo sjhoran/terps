@@ -670,7 +670,7 @@ static gagt_char_t GAGT_CHAR_TABLE[] = {
  * output buffers may be one and the same.
  */
 static void
-gagt_cp_to_iso (const unsigned char *from_string, unsigned char *to_string)
+gagt_unsigned_cp_to_unsigned_iso (const unsigned char *from_string, unsigned char *to_string)
 {
   static int is_initialized = FALSE;
   static unsigned char table[UCHAR_MAX + 1];
@@ -717,6 +717,11 @@ gagt_cp_to_iso (const unsigned char *from_string, unsigned char *to_string)
   to_string[index] = '\0';
 }
 
+static void
+gagt_cp_to_iso(const char *from_string, char *to_string) {
+  gagt_unsigned_cp_to_unsigned_iso((const unsigned char *)from_string, (unsigned char *)to_string);
+}
+
 
 /*
  * gagt_iso_to_cp()
@@ -725,7 +730,7 @@ gagt_cp_to_iso (const unsigned char *from_string, unsigned char *to_string)
  * output buffers may be one and the same.
  */
 static void
-gagt_iso_to_cp (const unsigned char *from_string, unsigned char *to_string)
+gagt_unsigned_iso_to_unsigned_cp (const unsigned char *from_string, unsigned char *to_string)
 {
   static int is_initialized = FALSE;
   static unsigned char table[UCHAR_MAX + 1];
@@ -776,6 +781,12 @@ gagt_iso_to_cp (const unsigned char *from_string, unsigned char *to_string)
 
   to_string[index] = '\0';
 }
+
+static void
+gagt_iso_to_cp(const char *from_string, char *to_string) {
+  gagt_unsigned_iso_to_unsigned_cp((const unsigned char *)from_string, (unsigned char *)to_string);
+}
+
 
 
 /*---------------------------------------------------------------------*/
@@ -915,7 +926,7 @@ gagt_status_update (void)
            */
           print_width = width < strlen (gagt_status_buffer)
                         ? width : strlen (gagt_status_buffer);
-          glk_put_buffer (gagt_status_buffer, print_width);
+          glk_put_buffer ((char *)gagt_status_buffer, print_width);
 
           if (gagt_extended_status_enabled)
             gagt_status_update_extended ();
@@ -3001,8 +3012,8 @@ gagt_compare_special_line (const char *compare, const gagt_lineref_t line)
    * indent and outdent) also matches, ignoring case.
    */
   return strlen (compare) == line->real_length
-         && gagt_strncasecmp (compare,
-                              line->buffer.data + line->indent,
+         && gagt_strncasecmp ((char *)compare,
+                              (char *)line->buffer.data + line->indent,
                               line->real_length) == 0;
 }
 
@@ -3338,7 +3349,7 @@ gagt_display_line (const gagt_lineref_t line, glui32 current_style,
     }
 
   /* Display this line segment. */
-  set_style = gagt_display_text_element (line->buffer.data + start,
+  set_style = gagt_display_text_element ((char *)line->buffer.data + start,
                                          line->buffer.attributes + start,
                                          length, current_style, fixed_width);
 
@@ -3487,7 +3498,7 @@ gagt_display_auto (void)
 
   /* Output any help hint and unterminated line from the line buffer. */
   style = gagt_display_provide_help_hint (style);
-  style = gagt_display_text_element (gagt_current_buffer.data,
+  style = gagt_display_text_element ((char *)gagt_current_buffer.data,
                                      gagt_current_buffer.attributes,
                                      gagt_current_buffer.length, style, FALSE);
 }
@@ -3536,7 +3547,7 @@ gagt_display_manual (int fixed_width)
 
   /* Output any help hint and unterminated line from the line buffer. */
   style = gagt_display_provide_help_hint (style);
-  style = gagt_display_text_element (gagt_current_buffer.data,
+  style = gagt_display_text_element ((char *)gagt_current_buffer.data,
                                      gagt_current_buffer.attributes,
                                      gagt_current_buffer.length,
                                      style, fixed_width);
@@ -3579,7 +3590,7 @@ gagt_display_debug (void)
                  line->font_hint == HINT_FIXED_WIDTH ? 'F' : '_');
       glk_put_string (buffer);
 
-      glk_put_buffer (line->buffer.data, line->buffer.length);
+      glk_put_buffer ((char *)line->buffer.data, line->buffer.length);
       glk_put_char ('\n');
     }
 
@@ -3591,7 +3602,7 @@ gagt_display_debug (void)
                gagt_help_requested ? "HR" : "__");
       glk_put_string (buffer);
 
-      glk_put_buffer (gagt_current_buffer.data, gagt_current_buffer.length);
+      glk_put_buffer ((char *)gagt_current_buffer.data, gagt_current_buffer.length);
     }
 
   gagt_help_requested = FALSE;
@@ -5273,7 +5284,7 @@ agt_input (int in_type)
         {
           /* Echo the line just read in input style. */
           glk_set_style (style_Input);
-          glk_put_buffer (buffer, chars);
+          glk_put_buffer ((char *)buffer, chars);
           glk_set_style (style_Normal);
 
           /*
