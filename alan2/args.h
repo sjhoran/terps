@@ -29,9 +29,5 @@ extern BPTR cd;
 #define PROGNAME "alan2"
 #endif
 
-#ifdef _PROTOTYPES_
 extern void args(int argc, char *argv[]);
-#else
-extern void args();
-#endif
 
