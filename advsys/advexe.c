@@ -65,7 +65,7 @@ void exe_one()
                 *--sp = pc;
                 *--sp = (int)(top - fp);
                 fp = sp;
-                if (p2 = fp[fp[2]+3])
+                if ((p2 = fp[fp[2]+3]))
                     p2 = getofield(p2,O_CLASS);
                 else
                     p2 = fp[fp[2]+2];
@@ -299,7 +299,7 @@ void print(int msg)
     int ch;
 
     msg_open(msg);
-    while (ch = msg_byte())
+    while ((ch = msg_byte()))
         trm_chr(ch);
 }
 

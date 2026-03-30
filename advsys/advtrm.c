@@ -23,9 +23,6 @@ static int scnt,wcnt;
 static char word[WORDMAX+1],*wptr;
 static FILE *logfp = NULL;
 
-/* forward declarations */
-char *trm_line();
-
 /* trm_init - initialize the terminal module */
 void trm_init(int rows, int cols, char *name)
 {

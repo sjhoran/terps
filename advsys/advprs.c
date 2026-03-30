@@ -15,9 +15,6 @@ int *adjectives[20];
 static int actor,action,dobject,ndobjects,iobject;
 static int flag;
 
-/* external routines */
-extern char *trm_get();
-
 /* external variables */
 extern char line[];	/* line buffer */
 
@@ -318,7 +315,7 @@ int get_word()
     if (*lptr != EOS) *lptr++ = EOS;
 
     /* look up the word */
-    if (words[wcnt] = findword(wtext[wcnt]))
+    if ((words[wcnt] = findword(wtext[wcnt])))
 	return (words[wcnt]);
     else {
 	trm_str("I don't know the word \"");
