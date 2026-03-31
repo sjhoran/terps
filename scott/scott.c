@@ -1242,8 +1242,8 @@ int glkunix_startup_code(glkunix_startup_t *data)
 	int argc = data->argc;
 	char **argv = data->argv;
 
-	if(argc < 1)
-		return 0;
+	if(argc < 2)
+		return 1;
 
 	while(argv[1])
 	{
