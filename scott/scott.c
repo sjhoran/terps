@@ -610,7 +610,7 @@ static int GetInput(int *vb, int *no)
 	{
 		do
 		{
-			Output("\nTell me what to do ? ");
+			Output("\n>"); /* Changed "Tell me what to do" prompt to more common ">" */
 			LineInput(buf, sizeof buf);
 			num=sscanf(buf,"%9s %9s",verb,noun);
 		}
