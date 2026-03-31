@@ -1571,6 +1571,9 @@ Bitmap* DecodeBitmap(char* dir, BitmapType type, int num, int x, int y)
 		if (bitmap_pc2_decode(file,x,y))
 			return bitmap;
 		break;
+	case NO_BITMAPS:
+			return NULL;
+		break;
 	}
 
 	return NULL;
