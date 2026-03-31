@@ -6747,7 +6747,8 @@ glkunix_startup_code (glkunix_startup_t * data)
   /* skip over the - options, assume first non- word is game file */
   int ai;
   for (ai=1; ai < data->argc && data->argv[ai][0] == '-'; ai++) {}
-  glkunix_set_base_file(data->argv[ai]);
+  if (data->argc >= ai+1) { glkunix_set_base_file(data->argv[ai]); }
+
   return gagt_startup_code (data->argc, data->argv);
 }
 #endif /* _unix */
