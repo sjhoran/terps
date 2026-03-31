@@ -27,6 +27,9 @@
  *   the verb "restore" has been special-cased to call GameLoad(), which
  *   now prompts for a filename via Glk.
  *
+ * The verb "save" when used on its own calls SaveGame(). "save xxx" falls through still
+ * and is handled as it would've been handled previously.
+ *
  * o The local character set is expected to be compatible with ASCII, at
  *   least in the printable character range.  Newlines are specially
  *   handled, however, and converted to Glk's expected newline
@@ -622,6 +625,15 @@ static int GetInput(int *vb, int *no)
 		}
 		if(num==1)
 			*noun=0;
+		switch(isupper((unsigned char)*verb)?tolower((unsigned char)*verb):*verb) {
+				case 'l':strcpy(verb,"LOOK");break;
+				case 'x':strcpy(verb,"EXAMINE");break;
+  }
+		if(*noun == 0 && xstrcasecmp(verb, "save") == 0)
+		{
+			SaveGame();
+			return -1;
+		}
 		if(*noun==0 && strlen(verb)==1)
 		{
 			switch(isupper((unsigned char)*verb)?tolower((unsigned char)*verb):*verb)
@@ -651,7 +663,7 @@ static int GetInput(int *vb, int *no)
 		*no=nc;
 		if(vc==-1)
 		{
-			Output("You use word(s) I don't know! ");
+			Output("Sorry, I don't know that verb/noun. ");
 		}
 	}
 	while(vc==-1);
@@ -1287,6 +1299,7 @@ int glkunix_startup_code(glkunix_startup_t *data)
 	if(argc==2)
 	{
 		game_file = argv[1];
+  glkunix_set_base_file(game_file);
 #ifdef GARGLK
 		const char *s;
 		if((s = strrchr(game_file, '/')) != NULL || (s = strrchr(game_file, '\\')) != NULL)
